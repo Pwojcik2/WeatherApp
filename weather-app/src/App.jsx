@@ -4,10 +4,15 @@ import WeatherCard from './components/WeatherCard'
 
 function App() {
 
-  const [locationSearch, setLocationSearch] = useState('London')
+  const [locationSearch, setLocationSearch] = useState('Newark')
   const [weatherObject, setWeatherObject] = useState({
-    location: '',
-    temperature: ''
+    state: '',
+    city: '',
+    temperature: '',
+    icon: '',
+    feelsLike: '',
+    wind: '',
+    humidity: ''
   })
   const [search, setSearch] = useState(false)
 
@@ -22,10 +27,15 @@ function App() {
         const result = await fetch(url)
         const json = await result.json()
         setWeatherObject({
-          location: json.location.name,
-          temperature: json.current.temp_f
+          state: json.location.region,
+          city: json.location.name,
+          temperature: json.current.temp_f,
+          icon: json.current.condition.icon,
+          feelsLike: json.current.feelslike_f,
+          wind: json.current.wind_mph,
+          humidity: json.current.humidity
         })
-        console.log(json)
+        //console.log(json)
         setSearch(false)
       }
       fetchData()
@@ -34,20 +44,24 @@ function App() {
   return (
     <>
       <h1>Weather App</h1>
-        <label>
-        Search Location: <input type="text" placeholder='Enter a City' onChange={handleChange}/>
-        </label>
-
       <div>
+       <input className='citySearch' type="text" placeholder='Enter a City' onChange={handleChange}/>
+        
       <button onClick={() => setSearch(true)}>
-          Search
+          Get Weather
         </button>
       </div>
 
-      <WeatherCard />
+      <WeatherCard 
+      state={weatherObject.state}
+      city={weatherObject.city} 
+      temperature={weatherObject.temperature}
+      icon={weatherObject.icon}
+      feelsLike={weatherObject.feelsLike}
+      wind={weatherObject.wind}
+      humidity={weatherObject.humidity}
+      />
 
-      <h1>Current Location: {weatherObject.location}</h1>
-      <h1>Current Temp: {weatherObject.temperature}°F</h1>
     </>
   )
 }
