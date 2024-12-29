@@ -27,7 +27,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url('public/sunny.avif');
+  background-image: url("./assets/sunny.avif");
   background-size: cover;
 }
 
@@ -79,7 +79,7 @@ button:focus-visible {
   color: #ffffff;
   background-color: #001b35;
 }
-.citySearch:hover{
+.citySearch:hover {
   border-color: #ffffff;
 }
 
